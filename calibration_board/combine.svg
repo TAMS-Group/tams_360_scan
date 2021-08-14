@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1 (ce6663b3b7, 2021-05-25)"
-   sodipodi:docname="combin.svg"
+   sodipodi:docname="combine.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -24,12 +24,12 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.67081229"
-     inkscape:cx="749.83719"
-     inkscape:cy="652.19437"
-     inkscape:window-width="1853"
-     inkscape:window-height="1176"
-     inkscape:window-x="67"
+     inkscape:zoom="0.47433592"
+     inkscape:cx="521.78212"
+     inkscape:cy="491.21306"
+     inkscape:window-width="1848"
+     inkscape:window-height="1163"
+     inkscape:window-x="1992"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
@@ -375,13 +375,13 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="190.81111"
+       x="190.13826"
        y="135.8399"
        id="text3097-48-9"><tspan
          sodipodi:role="line"
          id="tspan3095-1-46"
          style="font-size:4.23333px;stroke-width:0.264583"
-         x="190.81111"
+         x="190.13826"
          y="135.8399">236</tspan></text>
     <image
        width="30"
@@ -653,14 +653,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="220.65103"
-       y="137.84369"
+       x="220.12187"
+       y="135.8399"
        id="text3097-8"><tspan
          sodipodi:role="line"
          id="tspan3095-50"
          style="font-size:4.23333px;stroke-width:0.264583"
-         x="220.65103"
-         y="137.84369">235</tspan></text>
+         x="220.12187"
+         y="135.8399">235</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -727,5 +727,21 @@
          style="font-size:4.23333px;stroke-width:0.264583"
          x="369.77945"
          y="15.158811">221</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 28.929139,138.75539 359.999651,-1.2e-4"
+       id="path147" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 28.929139,168.75538 359.999651,-2.6e-4"
+       id="path149" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 178.9295,18.755287 V 288.75505"
+       id="path151" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 238.92929,18.755291 V 288.75381"
+       id="path153" />
   </g>
 </svg>
