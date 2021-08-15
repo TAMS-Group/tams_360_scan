@@ -2,6 +2,7 @@
 
 ## Calibration board
 
+![](calibration_board/combine.svg)
 ![](resources/tag_detection.png)
 ![](resources/tag_detection_result.png)
 
