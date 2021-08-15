@@ -11,9 +11,10 @@ import numpy as np
 from grasp_tools.utils.utils import show_points
 import pickle
 from grasp_tools.utils.utils import compute_xyz
-from grasp_tools.utils.get_camera_config import get_camera_params, GetCameraConfig
 from pupil_apriltags import Detector
 import matplotlib.pyplot as plt
+import rospkg
+import yaml
 
 
 def rgb2gray(rgb):
@@ -24,7 +25,8 @@ def rgb2gray(rgb):
 
 
 def main():
-    meshes = glob.glob("shot_20210802/save_*.pickle")
+    fig_path = rospkg.RosPack().get_path("tams_head_mesh")
+    meshes = glob.glob(fig_path+"/data/shot_20210802/save_*.pickle")
     all_points = np.array([[0, 0, 0]])
     for i, mesh in enumerate(meshes):
         with open(mesh, "rb") as handle:
@@ -35,7 +37,6 @@ def main():
 
             xyz = compute_xyz(depth, camera_params, flipud_indices=False, coppelia=False)
             xyz = xyz.reshape(-1, 3)
-            # camera_fx, camera_fy, camera_cx, camera_cy = [c for c in camera_params]
             cp = [camera_params["fx"], camera_params["fy"], camera_params["x_offset"], camera_params["y_offset"]]
             tags = at_detector.detect(gray, estimate_tag_pose=True, camera_params=cp, tag_size=160)
             pose_r = tags[0].pose_R
@@ -52,15 +53,18 @@ def main():
     all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 300)]
     all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > 100)]
     all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 500)]
-    show_points(all_points_crop, frame_size=100)
-    exit()
+    show_points(all_points_crop, frame_size=1)
+    with open("/tmp/tams_head_points_20210802.pickle", "wb") as handle:
+        pickle.dump(all_points_crop, handle)
+    np.savetxt("/tmp/tams_head_points_20210802.xyz", all_points_crop)
 
 
 if __name__ == "__main__":
     rospy.init_node("demo")
-    CAMERA_TYPE = "mechmind"
-    cam_config = GetCameraConfig(CAMERA_TYPE)
-    camera_params = get_camera_params(CAMERA_TYPE)
+    pkg_path = rospkg.RosPack().get_path("tams_camera_config")
+    with open(pkg_path+"/mechmind_camera/camera_info.yaml") as file:
+        camera_params = yaml.load(file)
     at_detector = Detector(families="tag36h11", nthreads=1, quad_decimate=1.0, quad_sigma=0.0, refine_edges=1,
                            decode_sharpening=0.25, debug=0)
+    print("calculate points for the first shot")
     main()
