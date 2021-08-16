@@ -50,13 +50,20 @@ class ConvertMesh:
             ori = pose.orientation
             ori = Quaternion(ori.w, ori.x, ori.y, ori.z)
             pose_r = ori.rotation_matrix
-            pose_t = np.array([pose.position.x, pose.position.y, pose.position.z])
-            xyz = pose_t.reshape(3) - xyz
+            pose_t = np.array([pose.position.x, pose.position.y, pose.position.z]) * 1000
+            xyz = - pose_t.reshape(3) + xyz
             new_xyz = np.dot(pose_r.T, xyz.T).T
             all_points = np.vstack([all_points, new_xyz])
-            if i == 2:
-                show_points(all_points, frame_size=100.5)
-                exit()
+        all_points_crop = all_points[np.where(all_points[:, 2] > 0)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 2] < 500)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 200)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] > -200)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -200)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 200)]
+        show_points(all_points_crop, frame_size=100.5)
+        with open("/tmp/tams_head_points_20210812.pickle", "wb") as handle:
+            pickle.dump(all_points_crop, handle)
+        np.savetxt("/tmp/tams_head_points_20210812.xyz", all_points_crop)
 
     def single_image_client(self):
         try:
