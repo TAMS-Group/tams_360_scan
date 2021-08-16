@@ -34,18 +34,13 @@ def main():
             rgb = data["rgb"]
             gray = rgb2gray(rgb)
             depth = data["depth"]
-
             xyz = compute_xyz(depth, camera_params, flipud_indices=False, coppelia=False)
             xyz = xyz.reshape(-1, 3)
             cp = [camera_params["fx"], camera_params["fy"], camera_params["x_offset"], camera_params["y_offset"]]
             tags = at_detector.detect(gray, estimate_tag_pose=True, camera_params=cp, tag_size=160)
             pose_r = tags[0].pose_R
             pose_t = tags[0].pose_t
-            transformation_matrix = np.eye(4)
-            transformation_matrix[:3, :3] = pose_r
-            transformation_matrix[:3, 3] = pose_t.reshape(3)
             xyz = pose_t.reshape(3) - xyz
-
             new_xyz = np.dot(pose_r.T, xyz.T).T
             all_points = np.vstack([all_points, new_xyz])
     all_points_crop = all_points[np.where(all_points[:, 2] > 0)]
