@@ -15,3 +15,7 @@
 |![](resources/points1.png)|![](resources/points2.png)|
 |:----------:|:----------:|
 |**Result 1**|**Result 2**|
+
+|![](resources/remove_outlier.png)|![](resources/normal_estimation.png)|
+|:----------:|:----------:|
+|**Remove outlier**|**Normal estimation**|
