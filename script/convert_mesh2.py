@@ -54,12 +54,12 @@ class ConvertMesh:
             xyz = - pose_t.reshape(3) + xyz
             new_xyz = np.dot(pose_r.T, xyz.T).T
             all_points = np.vstack([all_points, new_xyz])
-        all_points_crop = all_points[np.where(all_points[:, 2] > 0)]
+        all_points_crop = all_points[np.where(all_points[:, 2] > 6)]
         all_points_crop = all_points_crop[np.where(all_points_crop[:, 2] < 500)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 200)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] > -200)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -200)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 200)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 100)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] > -90)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -150)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 150)]
         show_points(all_points_crop, frame_size=100.5)
         with open("/tmp/tams_head_points_20210812.pickle", "wb") as handle:
             pickle.dump(all_points_crop, handle)
@@ -78,6 +78,6 @@ if __name__ == "__main__":
     rospy.init_node("demo")
     pkg_path = rospkg.RosPack().get_path("tams_camera_config")
     with open(pkg_path+"/mechmind_camera/camera_info.yaml") as file:
-        camera_params = yaml.load(file)
+        camera_params = yaml.safe_load(file)
     covert = ConvertMesh()
     covert.convert_meshes()
