@@ -8,10 +8,8 @@
 import rospy
 import glob
 import numpy as np
-from grasp_tools.utils.utils import show_points
 import pickle
 from grasp_tools.utils.utils import compute_xyz
-import matplotlib.pyplot as plt
 import rospkg
 from PIL import Image
 import os
@@ -57,20 +55,18 @@ class ConvertMesh:
             all_points = np.vstack([all_points, new_xyz])
         all_points_crop = all_points[np.where(all_points[:, 2] > 0.006)]
         all_points_crop = all_points_crop[np.where(all_points_crop[:, 2] < 0.500)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 0.090)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 0.100)]
         all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] > -0.090)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -0.150)]
+        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -0.20)]
         all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 0.150)]
-        show_points(all_points_crop, frame_size=0.1)
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(all_points_crop)
         cl, ind = pcd.remove_statistical_outlier(nb_neighbors=100, std_ratio=1.5)
         cl.estimate_normals()
-        show_points(cl)
+        o3d.visualization.draw_geometries([cl])
         points = np.asarray(cl.points)
         # mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_alpha_shape(cl, 4)  # this line fail to generate mesh
-        mesh, _ = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(cl)  # this line generate bad mesh
-        show_points(show_objs=[mesh])
+        # mesh, _ = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(cl)  # this line generate bad mesh
         with open("/tmp/tams_360_scan_points_1.pickle", "wb") as handle:
             pickle.dump(points, handle)
         np.savetxt("/tmp/tams_360_scan_points_1.xyz", points)
