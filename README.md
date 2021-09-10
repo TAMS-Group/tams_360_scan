@@ -1,4 +1,4 @@
-# TAMS head mesh
+# TAMS 360 Scan
 
 ## Calibration board
 
@@ -13,6 +13,7 @@
 - prepare data and put the `*.pickle` to `data/shot_1/` (the pickle file contain png and depth as a dict)
 - `rosrun tams_360_scan convert_mesh.py`
 
+## Example result:
 |![](resources/points1.png)|![](resources/points2.png)|
 |:----------:|:----------:|
 |**Result 1**|**Result 2**|
