@@ -23,7 +23,7 @@ import open3d as o3d
 
 class ConvertMesh:
     def __init__(self):
-        self.base_path = rospkg.RosPack().get_path("tams_head_mesh")
+        self.base_path = rospkg.RosPack().get_path("tams_360_scan")
 
         rospy.wait_for_service("single_image_tag_detection")
         rospy.loginfo("got service: single_image_tag_detection")
@@ -33,7 +33,7 @@ class ConvertMesh:
         self.service.camera_info.distortion_model = "plumb_bob"
 
     def convert_meshes(self):
-        meshes = glob.glob(self.base_path+"/data/shot_20210812/save_*.pickle")
+        meshes = glob.glob(self.base_path+"/data/shot_1/save_*.pickle")
         all_points = np.array([[0, 0, 0]])
         for i, mesh in enumerate(meshes):
             with open(mesh, "rb") as handle:

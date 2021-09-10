@@ -5,7 +5,7 @@
         <remap from="camera_info" to="/mechmind/camera_info" />
         <param name="camera_frame" type="str" value="mechmind_camera" />
         <param name="publish_tag_detections_image" type="bool" value="false" />      <!-- default: false -->
-        <rosparam command="load" file="$(find tams_head_mesh)/config/settings.yaml" />
-        <rosparam command="load" file="$(find tams_head_mesh)/config/bundle_tags.yaml" />
+        <rosparam command="load" file="$(find tams_360_scan)/config/settings.yaml" />
+        <rosparam command="load" file="$(find tams_360_scan)/config/bundle_tags.yaml" />
     </node>
 </launch>

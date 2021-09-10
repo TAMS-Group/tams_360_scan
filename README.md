@@ -9,8 +9,9 @@
 |**standalone tags**|**bundle tag**|
 
 ## Covert multi-view camera shots to a complete point cloud
-- `roslaunch tams_head_mesh single_image_server.launch`
-- `rosrun tams_head_mesh convert_mesh2.py` (need pickle file that contain png and depth as a dict)
+- `roslaunch tams_360_scan single_image_server.launch`
+- prepare data and put the `*.pickle` to `data/shot_1/` (the pickle file contain png and depth as a dict)
+- `rosrun tams_360_scan convert_mesh.py`
 
 |![](resources/points1.png)|![](resources/points2.png)|
 |:----------:|:----------:|

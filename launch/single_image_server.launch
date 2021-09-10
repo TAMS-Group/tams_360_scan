@@ -3,8 +3,8 @@
   <arg name="node_namespace" default="apriltag_ros_single_image_server_node" />
 
   <node pkg="apriltag_ros" type="apriltag_ros_single_image_server_node" name="$(arg node_namespace)" clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)" >
-    <rosparam command="load" file="$(find tams_head_mesh)/config/settings.yaml" />
-    <rosparam command="load" file="$(find tams_head_mesh)/config/bundle_tags.yaml" />
+    <rosparam command="load" file="$(find tams_360_scan)/config/settings.yaml" />
+    <rosparam command="load" file="$(find tams_360_scan)/config/bundle_tags.yaml" />
     <param name="camera_frame" type="str" value="camera"/>
     <param name="remove_duplicates" type="bool" value="true"/>
   </node>>
