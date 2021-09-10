@@ -31,6 +31,7 @@ class ConvertMesh:
         self.service.camera_info.distortion_model = "plumb_bob"
 
     def convert_meshes(self):
+        os.makedirs(self.base_path + "/data/shot_1/rgb/", exist_ok=True)
         meshes = glob.glob(self.base_path+"/data/shot_1/save_*.pickle")
         all_points = np.array([[0, 0, 0]])
         for i, mesh in enumerate(meshes):
