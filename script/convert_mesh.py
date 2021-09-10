@@ -71,9 +71,9 @@ class ConvertMesh:
         # mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_alpha_shape(cl, 4)  # this line fail to generate mesh
         mesh, _ = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(cl)  # this line generate bad mesh
         show_points(show_objs=[mesh])
-        with open("/tmp/tams_head_points_20210812.pickle", "wb") as handle:
+        with open("/tmp/tams_360_scan_points_1.pickle", "wb") as handle:
             pickle.dump(points, handle)
-        np.savetxt("/tmp/tams_head_points_20210812.xyz", points)
+        np.savetxt("/tmp/tams_360_scan_points_1.xyz", points)
 
     def single_image_client(self):
         try:
