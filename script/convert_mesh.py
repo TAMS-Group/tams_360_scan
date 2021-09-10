@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Author     : Hongzhuo Liang 
 # E-mail     : liang@informatik.uni-hamburg.de
@@ -9,7 +9,6 @@ import rospy
 import glob
 import numpy as np
 import pickle
-from grasp_tools.utils.utils import compute_xyz
 import rospkg
 from PIL import Image
 import os
@@ -17,6 +16,7 @@ from apriltag_ros.srv import AnalyzeSingleImage, AnalyzeSingleImageRequest
 import yaml
 from pyquaternion import Quaternion
 import open3d as o3d
+from grasp_tools.utils.utils import compute_xyz
 
 
 class ConvertMesh:
@@ -32,7 +32,7 @@ class ConvertMesh:
 
     def convert_meshes(self):
         os.makedirs(self.base_path + "/data/shot_1/rgb/", exist_ok=True)
-        meshes = glob.glob(self.base_path+"/data/shot_1/save_*.pickle")
+        meshes = glob.glob(self.base_path + "/data/shot_1/save_*.pickle")
         all_points = np.array([[0, 0, 0]])
         for i, mesh in enumerate(meshes):
             with open(mesh, "rb") as handle:
@@ -40,13 +40,13 @@ class ConvertMesh:
                 rgb = data["rgb"]
                 depth = data["depth"]
             rbg_img = Image.fromarray(rgb)
-            fig_save_path = os.path.dirname(mesh)+"/rgb/"+mesh.split("/")[-1][:-6]+"jpg"
+            fig_save_path = os.path.dirname(mesh) + "/rgb/" + mesh.split("/")[-1][:-6] + "jpg"
             rbg_img.save(fig_save_path)
             self.service.full_path_where_to_get_image = fig_save_path
-            self.service.full_path_where_to_save_image = fig_save_path[:-4]+"_result.jpg"
+            self.service.full_path_where_to_save_image = fig_save_path[:-4] + "_result.jpg"
             pose = self.single_image_client()
             xyz = compute_xyz(depth, camera_params, flipud_indices=False, coppelia=False)
-            xyz = xyz.reshape(-1, 3)/1000.0
+            xyz = xyz.reshape(-1, 3) / 1000.0
             ori = pose.orientation
             ori = Quaternion(ori.w, ori.x, ori.y, ori.z)
             pose_r = ori.rotation_matrix
@@ -84,7 +84,7 @@ class ConvertMesh:
 if __name__ == "__main__":
     rospy.init_node("demo")
     pkg_path = rospkg.RosPack().get_path("tams_camera_config")
-    with open(pkg_path+"/mechmind_camera/camera_info.yaml") as file:
+    with open(pkg_path + "/mechmind_camera/camera_info.yaml") as file:
         camera_params = yaml.safe_load(file)
     covert = ConvertMesh()
     covert.convert_meshes()

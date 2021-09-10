@@ -15,7 +15,7 @@ Put the following packges into the same ROS workspace as the current `tams_360_s
 
 ## Take shots
 - put the object you want to scan on the center of calibration board.
-- take shots using whatever tools you like at different angles, you should rotate the calibration board together with the object, and put the rgb and depth image for the same shoting angle to a python dict and save it as a `pickle` file.
+- take shots using whatever tools you like at different angles, you should rotate the calibration board together with the object, and put the rgb and depth image for the same shooting angle to a python dict and save it as a `pickle` file.
 - prepare data and put the `*.pickle` to `data/shot_1/` (the pickle file contain png and depth as a dict)
 
 ## Covert multi-view camera shots to a complete point cloud
