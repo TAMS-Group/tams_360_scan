@@ -19,7 +19,7 @@
     <param name="remove_duplicates" type="bool" value="true"/>
     </node>
   </group>
-  <node pkg="tams_360_scan" type="convert_mesh.py" name="convert_mesh" required="true">
+  <node pkg="tams_360_scan" type="convert_mesh.py" name="convert_mesh" required="true" output="screen">
     <param name="model_type" type="str" value="$(arg model_type)" />
   </node>
 </launch>

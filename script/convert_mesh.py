@@ -29,7 +29,7 @@ class ConvertMesh:
         self.service = AnalyzeSingleImageRequest()
         self.service.camera_info.P = camera_params["P"]
         self.service.camera_info.distortion_model = "plumb_bob"
-        self.model_type = rospy.get_param("/model_type", "gitarre")
+        self.model_type = rospy.get_param("~model_type", "gitarre")
 
     def convert_meshes(self):
         os.makedirs(self.base_path + f"/data/{self.model_type}/rgb/", exist_ok=True)
