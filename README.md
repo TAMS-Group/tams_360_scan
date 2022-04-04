@@ -19,9 +19,8 @@ Put the following packges into the same ROS workspace as the current `tams_360_s
 - prepare data and put the `*.pickle` to `data/shot_1/` (the pickle file contain png and depth as a dict)
 
 ## Covert multi-view camera shots to a complete point cloud
-- Open one terminal, and run: `roslaunch tams_360_scan single_image_server.launch`
+- Open one terminal, and run: `roslaunch tams_360_scan single_image_server.launch model_type:=head`
 - Specify the camera info you use, here is an example we use: https://github.com/TAMS-Group/tams_camera_config/blob/master/mechmind_camera/camera_info.yaml
-- Open another terminal, and run: `rosrun tams_360_scan convert_mesh.py`
 
 ## Example result:
 |![](resources/points2.png)|

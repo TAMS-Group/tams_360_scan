@@ -29,10 +29,11 @@ class ConvertMesh:
         self.service = AnalyzeSingleImageRequest()
         self.service.camera_info.P = camera_params["P"]
         self.service.camera_info.distortion_model = "plumb_bob"
+        self.model_type = rospy.get_param("/model_type", "gitarre")
 
     def convert_meshes(self):
-        os.makedirs(self.base_path + "/data/shot_1/rgb/", exist_ok=True)
-        meshes = glob.glob(self.base_path + "/data/shot_1/save_*.pickle")
+        os.makedirs(self.base_path + f"/data/{self.model_type}/rgb/", exist_ok=True)
+        meshes = glob.glob(self.base_path + f"/data/{self.model_type}/save_*.pickle")
         all_points = np.array([[0, 0, 0]])
         for i, mesh in enumerate(meshes):
             with open(mesh, "rb") as handle:
@@ -54,12 +55,22 @@ class ConvertMesh:
             xyz = - pose_t.reshape(3) + xyz
             new_xyz = np.dot(pose_r.T, xyz.T).T
             all_points = np.vstack([all_points, new_xyz])
-        all_points_crop = all_points[np.where(all_points[:, 2] > 0.006)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 2] < 0.500)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 0.100)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] > -0.090)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -0.20)]
-        all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 0.150)]
+        if self.model_type == "head":
+            all_points_crop = all_points[np.where(all_points[:, 2] > 0.006)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 2] < 0.500)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 0.100)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] > -0.090)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -0.20)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 0.150)]
+        elif self.model_type == "gitarre":
+            all_points_crop = all_points[np.where(all_points[:, 2] > -0.1)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 2] < 0.0100)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] < 0.500)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 1] > -0.50)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] > -0.20)]
+            all_points_crop = all_points_crop[np.where(all_points_crop[:, 0] < 0.25)]
+        else:
+            raise NotImplementedError
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(all_points_crop)
         cl, ind = pcd.remove_statistical_outlier(nb_neighbors=100, std_ratio=1.5)
@@ -75,8 +86,11 @@ class ConvertMesh:
     def single_image_client(self):
         try:
             respond = self.client(self.service)
-            pose = respond.tag_detections.detections[0].pose.pose.pose
-            return pose
+            dections = respond.tag_detections.detections
+            for dection in dections :
+                if dection.id[0] == 56 or len(dection.id) == 40:
+                    pose = dection.pose.pose.pose
+                    return pose
         except rospy.ServiceException as e:
             print("Service call failed: {}".format(e))
 
